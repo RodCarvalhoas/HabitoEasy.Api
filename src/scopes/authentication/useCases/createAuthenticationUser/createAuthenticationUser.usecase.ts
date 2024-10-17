@@ -6,13 +6,15 @@ import { ConflictException, Injectable } from "@nestjs/common";
 import { CreateAuthenticationUserValidator } from "./createAuthentcationUser.usecase.validator";
 import { AuthenticationUserRepository } from "../../repositories/authenticationUser/authenticationUser.repository";
 import UserBuilder from "../../builders/user.builder";
+import { UserTokenGateway } from "../../gateways/userToken/userToken.gateway";
 
 @Injectable()
 export class CreateAuthenticationUserUseCase implements BaseUseCase<CreateAuthenticationUserUseCaseInput, CreateAuthenticationUserUseCaseOutput> {
     constructor(
         private readonly logger: PinoLogger,
         private readonly validator: CreateAuthenticationUserValidator,
-        private readonly authenticationUserRepository: AuthenticationUserRepository
+        private readonly authenticationUserRepository: AuthenticationUserRepository,
+        private readonly userTokenGateway: UserTokenGateway
     ){}
 
     async execute(input: CreateAuthenticationUserUseCaseInput): Promise<CreateAuthenticationUserUseCaseOutput> {
@@ -34,9 +36,9 @@ export class CreateAuthenticationUserUseCase implements BaseUseCase<CreateAuthen
             )
         );
 
+        const [accessToken, refreshToken] = await this.userTokenGateway.generateTokens(user);
+        
         this.logger.info(`User with email ${input.email} successfully registered`);
-
-        return user;
+        return { accessToken, refreshToken }
     }
-    
 }
