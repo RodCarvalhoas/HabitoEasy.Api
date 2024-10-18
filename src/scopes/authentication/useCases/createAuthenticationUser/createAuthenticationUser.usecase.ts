@@ -7,6 +7,7 @@ import { CreateAuthenticationUserValidator } from "./createAuthentcationUser.use
 import { AuthenticationUserRepository } from "../../repositories/authenticationUser/authenticationUser.repository";
 import UserBuilder from "../../builders/user.builder";
 import { UserTokenGateway } from "../../gateways/userToken/userToken.gateway";
+import { UserTypes } from "src/infra/authentication/userTypes.enum";
 
 @Injectable()
 export class CreateAuthenticationUserUseCase implements BaseUseCase<CreateAuthenticationUserUseCaseInput, CreateAuthenticationUserUseCaseOutput> {
@@ -29,7 +30,7 @@ export class CreateAuthenticationUserUseCase implements BaseUseCase<CreateAuthen
 
         const user = await this.authenticationUserRepository.create(
             UserBuilder.buildAuthenticationUser(
-                'DEFAULT_USER', 
+                UserTypes.DEFAULT_USER, 
                 input.name, 
                 input.email, 
                 input.password
