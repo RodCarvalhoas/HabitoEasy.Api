@@ -34,5 +34,4 @@ export class AuthenticationUseCase implements BaseUseCase<AuthenticationUseCaseI
         this.logger.info('Successfully loged in');
         return { accessToken, refreshToken }
     }
-
 }

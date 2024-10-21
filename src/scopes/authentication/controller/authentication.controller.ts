@@ -24,7 +24,7 @@ export class AuthenticationController {
     }
 
     @Post("/login")
-    @HttpCode(HttpStatus.CREATED)
+    @HttpCode(HttpStatus.OK)
     async login(@Body() request: LoginRequest): Promise<LoginResponse> {
         this.logger.info(`useCase ${AuthenticationUseCase.name} started`);
 
