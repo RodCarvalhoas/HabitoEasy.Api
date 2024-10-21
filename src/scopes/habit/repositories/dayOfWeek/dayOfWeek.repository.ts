@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { DayOfWeekTypeOrmRepository } from "./dayOfWeek.typeorm.repository";
-import { DayOfWeek } from "../../entities/dayOfWeek";
+import { DayOfWeek } from "../../entities/dayOfWeek.entity";
 
 @Injectable()
 export class DayOfWeekRepository {
@@ -13,7 +13,7 @@ export class DayOfWeekRepository {
     }
 
     async findById(id: string): Promise<DayOfWeek>{
-        return await this.dayOfWeekTypeOrmRepository.findOneBy({id});
+        return await this.dayOfWeekTypeOrmRepository.findOneBy({ id });
     }
 
     async findAllByHabitId(habitId: string): Promise<DayOfWeek[]>{

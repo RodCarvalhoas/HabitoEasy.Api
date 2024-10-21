@@ -13,7 +13,7 @@ export class HabitRepository {
     }
 
     async findById(id: string): Promise<Habit>{
-        return await this.habitTypeOrmRepository.findOneBy({id});
+        return await this.habitTypeOrmRepository.findOneBy({ id });
     }
 
     async findAllByUserId(userId: string): Promise<Habit[]>{

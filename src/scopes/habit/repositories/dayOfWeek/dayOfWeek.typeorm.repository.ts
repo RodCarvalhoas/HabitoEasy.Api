@@ -1,5 +1,5 @@
 import { Repository } from "typeorm";
-import { DayOfWeek } from "../../entities/dayOfWeek";
+import { DayOfWeek } from "../../entities/dayOfWeek.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 
 export class DayOfWeekTypeOrmRepository extends Repository<DayOfWeek> {

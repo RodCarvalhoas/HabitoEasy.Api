@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { DayOfWeek } from "./dayOfWeek";
+import { DayOfWeek } from "./dayOfWeek.entity";
 import { AuthenticationUser } from "src/scopes/authentication/entities/authenticationUser.entity";
 
 @Entity({ name: "HABIT" })
