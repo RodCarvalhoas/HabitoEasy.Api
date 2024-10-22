@@ -9,7 +9,12 @@ export class DayOfWeek {
     @Column({ name: "DAY" })
     day: number;
 
-    @ManyToOne(() => Habit, (habit) => habit.daysOfWeek)
+    @ManyToOne(() => Habit, (habit) => habit.daysOfWeek, { onDelete: 'CASCADE' })
     @JoinColumn({ name: "HABIT" })
     habit: Habit;
+
+    constructor(day: number, habit: Habit){
+        this.day = day;
+        this.habit = habit;
+    }
 }

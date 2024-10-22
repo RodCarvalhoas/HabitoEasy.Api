@@ -13,10 +13,15 @@ export class Habit {
     @Column({ name: 'DURATION_IN_MINUTES' })
     durationInMinutes: number;
 
-    @OneToMany(() => DayOfWeek, (dayOfWeek) => dayOfWeek.habit)
+    @OneToMany(() => DayOfWeek, (dayOfWeek) => dayOfWeek.habit, { cascade: true })
     daysOfWeek: DayOfWeek[];
 
     @ManyToOne(() => AuthenticationUser)
     @JoinColumn({ name: "AUTHENTICATION_USER" })
     authenticationUser: AuthenticationUser;
+
+    constructor(name: string, durationInMinutes: number){
+        this.name = name;
+        this.durationInMinutes = durationInMinutes;
+    }
 }

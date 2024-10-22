@@ -1,9 +1,8 @@
-import { AuthenticationUserRepository } from './../../repositories/authenticationUser/authenticationUser.repository';
 import { Injectable } from "@nestjs/common";
 import { PinoLogger } from "nestjs-pino";
 import { AuthenticationUser } from "../../entities/authenticationUser.entity";
 import { AccessToken } from './interfaces/accessToken';
-import { decode, sign, verify } from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 import { ConfigHelper } from 'src/scopes/authentication/helpers/ConfigHelper';
 import { RefreshToken } from './interfaces/refreshToken';
 
