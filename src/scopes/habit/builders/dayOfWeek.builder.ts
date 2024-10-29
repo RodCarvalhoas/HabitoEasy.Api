@@ -1,5 +1,5 @@
-import { DayOfWeek } from "../entities/dayOfWeek.entity";
-import { Habit } from "../entities/habit.entity";
+import { DayOfWeek } from "../commands/entities/dayOfWeek.entity";
+import { Habit } from "../commands/entities/habit.entity";
 
 export default class DayOfWeekBuilder {
     public static buildDaysOfWeek(days: number[], habit: Habit): DayOfWeek[] {
