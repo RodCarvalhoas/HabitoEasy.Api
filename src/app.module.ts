@@ -3,11 +3,13 @@ import { ScopesModule } from './scopes/scopes.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from './infra/db/data-source';
 import { LoggerModule } from 'nestjs-pino';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
     ScopesModule,
     TypeOrmModule.forRoot(dataSourceOptions),
+    MongooseModule.forRoot(process.env.MONGO_CONNECTION_STRING),
     LoggerModule.forRoot({
       pinoHttp: {
         quietReqLogger: true,
