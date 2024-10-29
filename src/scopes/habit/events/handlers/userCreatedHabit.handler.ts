@@ -2,6 +2,7 @@ import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
 import { UserCreateHabitEvent } from "../impl/userCreatedHabit.event";
 import { HabitQueryRepository } from "../../queries/repositories/habit/habit.query.repository";
 import { PinoLogger } from "nestjs-pino";
+import { CreateFailedEvent } from "src/scopes/event/services/createFailedEvent/createFailedEvent";
 
 @EventsHandler(UserCreateHabitEvent)
 export class UserCreatedHabitHandler implements IEventHandler<UserCreateHabitEvent> {
@@ -10,7 +11,8 @@ export class UserCreatedHabitHandler implements IEventHandler<UserCreateHabitEve
 
     constructor(
         private readonly logger: PinoLogger,
-        private readonly habitQueryRepository: HabitQueryRepository
+        private readonly habitQueryRepository: HabitQueryRepository,
+        private readonly createFailedEvent: CreateFailedEvent
     ){}
 
     async handle(event: UserCreateHabitEvent) {
@@ -36,6 +38,13 @@ export class UserCreatedHabitHandler implements IEventHandler<UserCreateHabitEve
 
                 if (attempt >= this.maxRetries) {
                     this.logger.error(`Failed to process event ${event.id} after ${this.maxRetries} attempts`);
+
+                    await this.createFailedEvent.save(
+                        UserCreateHabitEvent.name,
+                        event,
+                        error.message
+                    );
+
                     throw new Error(`Exceeded max retries for event ${event.id}`);
                 }
 

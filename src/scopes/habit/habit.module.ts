@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { HabitRepositoryModule } from "./commands/repositories/habit/habit.repository.module";
+import { HabitCommandRepositoryModule } from "./commands/repositories/habit/habit.command.repository.module";
 import { DayOfWeekRepositoryModule } from "./commands/repositories/dayOfWeek/dayOfWeek.repository.module";
 import { CreateHabitUseCaseModule } from "./useCases/createHabit/createHabit.usecase.module";
 import { HabitQueryRepositoryModule } from "./queries/repositories/habit/habit.query.repository.module";
@@ -12,7 +12,7 @@ const EventHandlers = [UserCreatedHabitHandler];
 
 @Module({
     imports: [
-        HabitRepositoryModule,
+        HabitCommandRepositoryModule,
         DayOfWeekRepositoryModule,
         CreateHabitUseCaseModule,
         HabitQueryRepositoryModule,

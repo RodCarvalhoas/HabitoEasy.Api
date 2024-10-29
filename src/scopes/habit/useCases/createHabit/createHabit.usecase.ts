@@ -2,21 +2,21 @@ import { Injectable } from "@nestjs/common";
 import { PinoLogger } from "nestjs-pino";
 import BaseUseCase from "src/infra/useCase/baseUseCase";
 import { CreateHabitUseCaseInput } from "./createHabit.usecase.input";
-import { HabitRepository } from "../../commands/repositories/habit/habit.repository";
+import { HabitCommandRepository } from "../../commands/repositories/habit/habit.command.repository";
 import { CreateHabitValidator } from "./createHabit.usecase.validator";
 import { Habit } from "../../commands/entities/habit.entity";
 import DayOfWeekBuilder from "../../builders/dayOfWeek.builder";
 import { AuthenticationUser } from "src/scopes/authentication/entities/authenticationUser.entity";
 import { UserCreateHabitEvent } from "../../events/impl/userCreatedHabit.event";
 import { CreateHabitUseCaseOutput } from "./createHabit.usecase.output";
-import { EventPublisher } from "src/infra/events/eventPublisher";
+import { EventPublisher } from "src/scopes/event/services/publisher/eventPublisher";
 
 @Injectable()
 export class CreateHabitUseCase implements BaseUseCase<CreateHabitUseCaseInput, CreateHabitUseCaseOutput>{
     constructor(
         private readonly logger: PinoLogger,
         private readonly validator: CreateHabitValidator,
-        private readonly habitRepository: HabitRepository,
+        private readonly habitRepository: HabitCommandRepository,
         private readonly eventPublisher: EventPublisher,
     ){}
 
