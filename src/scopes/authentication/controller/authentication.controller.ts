@@ -6,13 +6,16 @@ import { LoginRequest } from "./transport/login/login.request";
 import { LoginResponse } from "./transport/login/login.response";
 import { AuthenticationUseCase } from "../useCases/authentication/authentication.usecase";
 import { RegisterResponse } from "./transport/register/register.response";
+import { RefreshRequest } from "./transport/refresh/refresh.request";
+import { RefreshTokenUseCase } from "../useCases/refreshToken/refreshToken.usecase";
 
 @Controller("/authentication")
 export class AuthenticationController {
     constructor(
         private readonly logger: PinoLogger,
         private readonly createAuthenticationUseCase: CreateAuthenticationUserUseCase,
-        private readonly authenticationUseCase: AuthenticationUseCase
+        private readonly authenticationUseCase: AuthenticationUseCase,
+        private readonly refreshTokenUseCase: RefreshTokenUseCase
     ){}
 
     @Post("/register")
@@ -29,5 +32,13 @@ export class AuthenticationController {
         this.logger.info(`useCase ${AuthenticationUseCase.name} started`);
 
         return await this.authenticationUseCase.execute(request);
+    }
+
+    @Post("/refresh")
+    @HttpCode(HttpStatus.OK)
+    async refresh(@Body() request: RefreshRequest): Promise<RefreshRequest>  {
+        this.logger.info(`useCase ${RefreshTokenUseCase.name} started`);
+
+        return await this.refreshTokenUseCase.execute(request);
     }
 }

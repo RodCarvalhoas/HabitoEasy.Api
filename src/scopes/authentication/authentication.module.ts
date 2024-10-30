@@ -3,12 +3,14 @@ import { AuthenticationUserRepositoryModule } from "./repositories/authenticatio
 import { AuthenticationController } from "./controller/authentication.controller";
 import { CreateAuthenticationUserUseCaseModule } from "./useCases/createAuthenticationUser/createAuthenticationUser.usecase.module";
 import { AuthenticationUseCaseModule } from "./useCases/authentication/authentication.usecase.module";
+import { RefreshTokenUseCaseModule } from "./useCases/refreshToken/refreshToken.usecase.module";
 
 @Module({
     imports: [
         AuthenticationUserRepositoryModule,
         CreateAuthenticationUserUseCaseModule,
-        AuthenticationUseCaseModule
+        AuthenticationUseCaseModule,
+        RefreshTokenUseCaseModule
     ],
     controllers: [AuthenticationController]
 })

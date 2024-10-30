@@ -15,4 +15,8 @@ export class AuthenticationUserRepository {
     async findByEmail(email: string): Promise<AuthenticationUser> {
         return await this.authenticationUserTypeOrmRepository.findOneBy({ email })
     }
+
+    async findById(id: string): Promise<AuthenticationUser> {
+        return await this.authenticationUserTypeOrmRepository.findOneBy({ id })
+    }
 }
