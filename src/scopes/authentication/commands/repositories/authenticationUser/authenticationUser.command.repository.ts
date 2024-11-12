@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { AuthenticationUserTypeOrmRepository } from "./authenticationUser.typeorm.repository";
+import { AuthenticationUserCommandTypeOrmRepository } from "./authenticationUser.command.typeorm.repository";
 import { AuthenticationUser } from "../../entities/authenticationUser.entity";
 
 @Injectable()
-export class AuthenticationUserRepository {
+export class AuthenticationUserCommandRepository {
     constructor(
-        private readonly authenticationUserTypeOrmRepository: AuthenticationUserTypeOrmRepository 
+        private readonly authenticationUserTypeOrmRepository: AuthenticationUserCommandTypeOrmRepository 
     ){}
 
     async create(authenticationUser: AuthenticationUser): Promise<AuthenticationUser> {

@@ -1,17 +1,17 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { PinoLogger } from "nestjs-pino";
-import { AuthenticationUser } from "../../entities/authenticationUser.entity";
+import { AuthenticationUser } from "../../commands/entities/authenticationUser.entity";
 import { AccessToken } from './interfaces/accessToken';
 import { sign, decode, verify } from 'jsonwebtoken';
 import { ConfigHelper } from 'src/scopes/authentication/helpers/ConfigHelper';
 import { RefreshToken } from './interfaces/refreshToken';
-import { AuthenticationUserRepository } from "../../repositories/authenticationUser/authenticationUser.repository";
+import { AuthenticationUserCommandRepository } from "../../commands/repositories/authenticationUser/authenticationUser.command.repository";
 
 @Injectable()
 export class UserTokenGateway {
     constructor(
         private readonly logger: PinoLogger,
-        private readonly authenticationUserRepository: AuthenticationUserRepository
+        private readonly authenticationUserRepository: AuthenticationUserCommandRepository
     ){}
 
     async generateTokens(user: AuthenticationUser, tokenMetadata?: string): Promise<[string, string]> {

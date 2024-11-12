@@ -5,7 +5,7 @@ import { AuthenticationUseCaseInput } from "./authentication.usecase.input";
 import { AuthenticationUseCaseOutput } from "./authentication.usecase.output";
 import { PinoLogger } from "nestjs-pino";
 import { AuthenticationUseCaseValidator } from "./authentication.usecase.validator";
-import { AuthenticationUserRepository } from "../../repositories/authenticationUser/authenticationUser.repository";
+import { AuthenticationUserCommandRepository } from "../../commands/repositories/authenticationUser/authenticationUser.command.repository";
 import RequestEnding from "src/infra/exceptions/RequestEnding";
 import SecurityHelper from "src/scopes/authentication/helpers/SecurityHelper";
 
@@ -14,7 +14,7 @@ export class AuthenticationUseCase implements BaseUseCase<AuthenticationUseCaseI
     constructor(
         private readonly logger: PinoLogger,
         private readonly validator: AuthenticationUseCaseValidator,
-        private readonly authenticationUserRepository: AuthenticationUserRepository,
+        private readonly authenticationUserRepository: AuthenticationUserCommandRepository,
         private readonly userTokenGateway: UserTokenGateway
     ){}
     

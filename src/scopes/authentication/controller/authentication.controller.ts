@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post } from "@nestjs/common";
 import { PinoLogger } from "nestjs-pino";
 import { CreateAuthenticationUserUseCase } from "../useCases/createAuthenticationUser/createAuthenticationUser.usecase";
 import { RegisterRequest } from "./transport/register/register.request";
@@ -8,6 +8,12 @@ import { AuthenticationUseCase } from "../useCases/authentication/authentication
 import { RegisterResponse } from "./transport/register/register.response";
 import { RefreshRequest } from "./transport/refresh/refresh.request";
 import { RefreshTokenUseCase } from "../useCases/refreshToken/refreshToken.usecase";
+import { GetUserResponse } from "./transport/getUser/getUser.response";
+import { GetUserDetailsUseCase } from "../useCases/getUserDetails/getUserDetails.usecase";
+import { UserAccessToken } from "src/infra/authentication/userAccessToken.decorator";
+import { AccessToken } from "../gateways/userToken/interfaces/accessToken";
+import { Authentication } from "src/infra/authentication/authentication.decorator";
+import { UserTypes } from "src/infra/authentication/userTypes.enum";
 
 @Controller("/authentication")
 export class AuthenticationController {
@@ -15,7 +21,8 @@ export class AuthenticationController {
         private readonly logger: PinoLogger,
         private readonly createAuthenticationUseCase: CreateAuthenticationUserUseCase,
         private readonly authenticationUseCase: AuthenticationUseCase,
-        private readonly refreshTokenUseCase: RefreshTokenUseCase
+        private readonly refreshTokenUseCase: RefreshTokenUseCase,
+        private readonly getUserDetailsUseCase: GetUserDetailsUseCase
     ){}
 
     @Post("/register")
@@ -40,5 +47,14 @@ export class AuthenticationController {
         this.logger.info(`useCase ${RefreshTokenUseCase.name} started`);
 
         return await this.refreshTokenUseCase.execute(request);
+    }
+
+    @Get("/user-details")
+    @HttpCode(HttpStatus.OK)
+    @Authentication([UserTypes.DEFAULT_USER])
+    async getUserDetails(@UserAccessToken() accessToken: AccessToken): Promise<GetUserResponse>  {
+        this.logger.info(`useCase ${GetUserDetailsUseCase.name} started`);
+
+        return await this.getUserDetailsUseCase.execute({userId: accessToken.userId});
     }
 }

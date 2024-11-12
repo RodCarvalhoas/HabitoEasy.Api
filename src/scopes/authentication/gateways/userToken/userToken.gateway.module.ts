@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 import { UserTokenGateway } from "./userToken.gateway";
-import { AuthenticationUserRepositoryModule } from "../../repositories/authenticationUser/authenticationUser.repository.module";
+import { AuthenticationUserCommandRepositoryModule } from "../../commands/repositories/authenticationUser/authenticationUser.command.repository.module";
 
 @Module({
-    imports: [AuthenticationUserRepositoryModule],
+    imports: [AuthenticationUserCommandRepositoryModule],
     providers: [UserTokenGateway],
     exports: [UserTokenGateway]
 })

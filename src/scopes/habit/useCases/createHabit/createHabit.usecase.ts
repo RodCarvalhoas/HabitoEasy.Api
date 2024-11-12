@@ -6,7 +6,7 @@ import { HabitCommandRepository } from "../../commands/repositories/habit/habit.
 import { CreateHabitValidator } from "./createHabit.usecase.validator";
 import { Habit } from "../../commands/entities/habit.entity";
 import DayOfWeekBuilder from "../../builders/dayOfWeek.builder";
-import { AuthenticationUser } from "src/scopes/authentication/entities/authenticationUser.entity";
+import { AuthenticationUser } from "src/scopes/authentication/commands/entities/authenticationUser.entity";
 import { UserCreateHabitEvent } from "../../events/impl/userCreatedHabit.event";
 import { CreateHabitUseCaseOutput } from "./createHabit.usecase.output";
 import { EventPublisher } from "src/scopes/event/services/publisher/eventPublisher";

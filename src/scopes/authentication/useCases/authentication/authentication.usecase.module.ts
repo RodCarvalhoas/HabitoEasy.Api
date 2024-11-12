@@ -1,12 +1,12 @@
 import { Module } from "@nestjs/common";
-import { AuthenticationUserRepositoryModule } from "../../repositories/authenticationUser/authenticationUser.repository.module";
+import { AuthenticationUserCommandRepositoryModule } from "../../commands/repositories/authenticationUser/authenticationUser.command.repository.module";
 import { UserTokenGatewayModule } from "../../gateways/userToken/userToken.gateway.module";
 import { AuthenticationUseCaseValidator } from "./authentication.usecase.validator";
 import { AuthenticationUseCase } from "./authentication.usecase";
 
 @Module({
     imports: [
-        AuthenticationUserRepositoryModule,
+        AuthenticationUserCommandRepositoryModule,
         UserTokenGatewayModule
     ],
     providers: [AuthenticationUseCaseValidator, AuthenticationUseCase],

@@ -4,18 +4,21 @@ import { CreateAuthenticationUserUseCaseOutput } from "./createAuthenticationUse
 import { PinoLogger } from "nestjs-pino";
 import { ConflictException, Injectable } from "@nestjs/common";
 import { CreateAuthenticationUserValidator } from "./createAuthentcationUser.usecase.validator";
-import { AuthenticationUserRepository } from "../../repositories/authenticationUser/authenticationUser.repository";
+import { AuthenticationUserCommandRepository } from "../../commands/repositories/authenticationUser/authenticationUser.command.repository";
 import UserBuilder from "../../builders/user.builder";
 import { UserTokenGateway } from "../../gateways/userToken/userToken.gateway";
 import { UserTypes } from "src/infra/authentication/userTypes.enum";
+import { EventPublisher } from "src/scopes/event/services/publisher/eventPublisher";
+import { CreatedAuthenticationUserEvent } from "../../events/Impl/createdAuthenticationUser.event";
 
 @Injectable()
 export class CreateAuthenticationUserUseCase implements BaseUseCase<CreateAuthenticationUserUseCaseInput, CreateAuthenticationUserUseCaseOutput> {
     constructor(
         private readonly logger: PinoLogger,
         private readonly validator: CreateAuthenticationUserValidator,
-        private readonly authenticationUserRepository: AuthenticationUserRepository,
-        private readonly userTokenGateway: UserTokenGateway
+        private readonly authenticationUserRepository: AuthenticationUserCommandRepository,
+        private readonly userTokenGateway: UserTokenGateway,
+        private readonly eventPublisher: EventPublisher,
     ){}
 
     async execute(input: CreateAuthenticationUserUseCaseInput): Promise<CreateAuthenticationUserUseCaseOutput> {
@@ -36,6 +39,14 @@ export class CreateAuthenticationUserUseCase implements BaseUseCase<CreateAuthen
                 input.password
             )
         );
+
+        this.eventPublisher.publish(
+            new CreatedAuthenticationUserEvent(
+                user.id,
+                user.name,
+                user.email
+            )
+        )
 
         const [accessToken, refreshToken] = await this.userTokenGateway.generateTokens(user);
         

@@ -1,5 +1,5 @@
 import SecurityHelper from "src/scopes/authentication/helpers/SecurityHelper";
-import { AuthenticationUser } from "../entities/authenticationUser.entity";
+import { AuthenticationUser } from "../commands/entities/authenticationUser.entity";
 
 export default class UserBuilder {
     public static buildAuthenticationUser(type: string, name: string, email: string, password?: string): AuthenticationUser {
