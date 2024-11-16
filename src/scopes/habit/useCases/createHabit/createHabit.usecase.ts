@@ -21,8 +21,6 @@ export class CreateHabitUseCase implements BaseUseCase<CreateHabitUseCaseInput, 
     ){}
 
     async execute(input: CreateHabitUseCaseInput): Promise<CreateHabitUseCaseOutput> {
-        this.logger.info(`UseCase ${CreateHabitUseCase.name} started `)
-
         await this.validator.validate(input);
 
         let habit = new Habit(input.name, input.durationInMinutes);
